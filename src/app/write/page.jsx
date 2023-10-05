@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./writePage.module.css";
 import Image from "next/image";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -14,27 +13,28 @@ import {
 } from "firebase/storage";
 import { app } from "../utils/firebase";
 
-
 const WritePage = () => {
   const { status } = useSession();
-  
+
+  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
   const router = useRouter();
-  
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [title, setTitle] = useState("");
-  
+
   useEffect(() => {
     const storage = getStorage(app);
     const upload = () => {
-      console.log('upload is running');
+      console.log("upload is running");
       const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, name);
-      
+
       const uploadTask = uploadBytesResumable(storageRef, file);
-  
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -60,7 +60,7 @@ const WritePage = () => {
           });
         }
       );
-    }
+    };
     file && upload();
   }, [file]);
 
