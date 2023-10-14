@@ -13,6 +13,7 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  secret: process.env.NEXTAUTH_URL,
 }
 
 export const getAuthSession = () => getServerSession(authOptions);
