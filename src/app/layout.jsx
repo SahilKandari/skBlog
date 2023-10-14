@@ -1,17 +1,18 @@
-import { ThemeContextProvider } from '@/context/ThemeContext'
-import Footer from './components/footer/Footer'
-import Navbar from './components/navbar/Navbar'
-import './globals.css'
-import { Inter } from 'next/font/google'
-import ThemeProvider from '@/providers/ThemeProvider'
-import AuthProvider from '@/providers/AuthProvider'
+import { ThemeContextProvider } from "@/context/ThemeContext";
+import Footer from "./components/footer/Footer";
+import Navbar from "./components/navbar/Navbar";
+import "./globals.css";
+import { Inter } from "next/font/google";
+import ThemeProvider from "@/providers/ThemeProvider";
+import AuthProvider from "@/providers/AuthProvider";
+import { CategoryProvider } from "@/providers/CategoryContext";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Blog App',
-  description: 'The best blog app!',
-}
+  title: "Blog App",
+  description: "The best blog app!",
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -20,17 +21,19 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <ThemeContextProvider>
             <ThemeProvider>
-              <div className="container">
-                <div className="wrapper">
-                  <Navbar/>
-                  {children}
-                  <Footer/>
+              <CategoryProvider>
+                <div className="container">
+                  <div className="wrapper">
+                    <Navbar />
+                    {children}
+                    <Footer />
+                  </div>
                 </div>
-              </div>
+              </CategoryProvider >
             </ThemeProvider>
           </ThemeContextProvider>
         </AuthProvider>
       </body>
     </html>
-  )
+  );
 }

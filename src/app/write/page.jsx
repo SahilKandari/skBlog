@@ -12,6 +12,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "../utils/firebase";
+import dynamic from "next/dynamic";
+import MenuCategory from "../components/menuCategory/MenuCategory";
+// import { getCategory } from "../page";
+import { useCategory } from '../../providers/CategoryContext'; 
+import { getRandomDarkColor } from '../page'
+
 
 const WritePage = () => {
   const { status } = useSession();
@@ -26,6 +32,7 @@ const WritePage = () => {
   const [media, setMedia] = useState("");
   const [title, setTitle] = useState("");
 
+  const { category, loading, error } = useCategory();
   useEffect(() => {
     const storage = getStorage(app);
     const upload = () => {
@@ -95,6 +102,7 @@ const WritePage = () => {
 
   return (
     <div className={styles.container}>
+      <MenuCategory edit={true}/>
       <input
         type="text"
         placeholder="Title"

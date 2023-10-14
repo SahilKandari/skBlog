@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./menu.module.css";
 import MenuPosts from "../menuPosts/MenuPosts";
 import MenuCategory from "../menuCategory/MenuCategory";
-const Menu = () => {
+const Menu = ({data, getRandomDarkColor }) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.subtitle}>{"What's hot"}</h2>
@@ -13,7 +13,7 @@ const Menu = () => {
       <MenuCategory/>
       <h2 className={styles.subtitle}>Choosen by the editor</h2>
       <h1 className={styles.title}>{"Editor's Pick"}Editors Pick</h1>
-      <MenuPosts withImage={true}/>
+      <MenuPosts withImage={true} />
     </div>
   );
 };

@@ -1,42 +1,43 @@
-import React from 'react'
-import styles from './menuCategory.module.css'
-import Link from 'next/link'
+"use client";
+import React, { useState } from "react";
+import styles from "./menuCategory.module.css";
+import Link from "next/link";
+import { useCategory } from "../../../providers/CategoryContext";
+import { getRandomDarkColor } from "../../page";
 
-const MenuCategory = () => {
+const MenuCategory = ({ edit }) => {
+  const [newCat, setNewCat] = useState('New Category');
+  const { category, loading, error } = useCategory();
   return (
     <div className={styles.categoryList}>
-      <Link
-        href="/blog?cat=style"
-        className={`${styles.categoryItem} ${styles.style}`}
-      >
-        Style
-      </Link>
-      <Link
-        href="/blog?cat=style"
-        className={`${styles.categoryItem} ${styles.fashion}`}
-      >
-        Fashion
-      </Link>
-      <Link
-        href="/blog?cat=style"
-        className={`${styles.categoryItem} ${styles.food}`}
-      >
-        Food
-      </Link>
-      <Link
-        href="/blog?cat=style"
-        className={`${styles.categoryItem} ${styles.culture}`}
-      >
-        Culture
-      </Link>
-      <Link
-        href="/blog?cat=style"
-        className={`${styles.categoryItem} ${styles.travel}`}
-      >
-        Travel
-      </Link>
+      <input
+        className={`${styles.categoryItem} ${styles.new}`}
+        value={newCat}
+        onChange={(e) => setNewCat(e.target.value)}
+      ></input>
+      {category?.categories.map((category) =>
+        edit ? (
+          <input
+            // className={`${styles.categoryItem} ${styles[category.slug]}`}
+            className={`${styles.categoryItem}`}
+            style={{ backgroundColor: getRandomDarkColor(0.7) }}
+            value={category.title}
+            key={category.id}
+          ></input>
+        ) : (
+          <Link
+            href={`/blog?cat=${category.slug}`}
+            // className={`${styles.categoryItem} ${styles[category.slug]}`}
+            className={`${styles.categoryItem}`}
+            style={{ backgroundColor: getRandomDarkColor(0.7) }}
+            key={category.id}
+          >
+            {category.title}
+          </Link>
+        )
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default MenuCategory
+export default MenuCategory;

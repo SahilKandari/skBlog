@@ -21,12 +21,11 @@ export const convertDate = (dbFormat) => {   // Convert db date into readable da
   return formattedDateTime;
 }
 
-const Card = ({key, item}) => {
+const Card = ({item}) => {
   const date = convertDate(item.createdAt)
   
-  console.log(item,'item');
   return (
-    <div className={styles.container} key={key}>
+    <div className={styles.container} key={item.id}>
       <div className={styles.imageContainer}>
         {item.img && <Image src={item.img} alt="" fill className={styles.image}/>}
       </div>
