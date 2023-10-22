@@ -5,16 +5,22 @@ import Link from "next/link";
 import { useCategory } from "../../../providers/CategoryContext";
 import { getRandomDarkColor } from "../../page";
 
-const MenuCategory = ({ edit }) => {
-  const [newCat, setNewCat] = useState('New Category');
+const MenuCategory = ({ edit, slcCat, cat }) => {
+  const [newCat, setNewCat] = useState("New Category");
   const { category, loading, error } = useCategory();
   return (
     <div className={styles.categoryList}>
-      <input
-        className={`${styles.categoryItem} ${styles.new}`}
-        value={newCat}
-        onChange={(e) => setNewCat(e.target.value)}
-      ></input>
+      {edit ? (
+        <input
+          className={`${styles.categoryItem} ${styles.new}`}
+          value={newCat}
+          onChange={(e) => setNewCat(e.target.value)}
+          onClick={(e) => slcCat(e.target.value)} 
+          placeholder="New Category"
+        ></input>
+      ) : (
+        ""
+      )}
       {category?.categories.map((category) =>
         edit ? (
           <input
@@ -23,6 +29,8 @@ const MenuCategory = ({ edit }) => {
             style={{ backgroundColor: getRandomDarkColor(0.7) }}
             value={category.title}
             key={category.id}
+            onClick={(e) => slcCat(e.target.value)} 
+            readOnly
           ></input>
         ) : (
           <Link

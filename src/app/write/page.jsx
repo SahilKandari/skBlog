@@ -31,6 +31,8 @@ const WritePage = () => {
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [title, setTitle] = useState("");
+  const [slctdCategory, setSlctdCategory] = useState("New Category");
+
 
   const { category, loading, error } = useCategory();
   useEffect(() => {
@@ -77,7 +79,6 @@ const WritePage = () => {
   if (status === "unauthenticated") {
     router.push("/");
   }
-
   const handleSubmit = async () => {
     const res = await fetch("/api/posts", {
       method: "POST",
@@ -86,7 +87,7 @@ const WritePage = () => {
         desc: value,
         img: media,
         slug: slugify(title),
-        catSlug: "travel",
+        catSlug: slctdCategory,
       }),
     });
     console.log(res);
@@ -102,7 +103,7 @@ const WritePage = () => {
 
   return (
     <div className={styles.container}>
-      <MenuCategory edit={true}/>
+      <MenuCategory edit={true} slcCat ={setSlctdCategory} cat={slctdCategory} />
       <input
         type="text"
         placeholder="Title"
